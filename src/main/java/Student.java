@@ -1,45 +1,33 @@
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
+@Data
+@Builder
+@AllArgsConstructor
 public class Student {
     private String name;
     private String curriculum;
     private Date startDate;
-    private List<List<String>> courseList;
+    private Map<String, List<String>> courseList;
 
-    public Student(String name, String curriculum, Date startDate, List<List<String>> courseList) {
-        this.name = name;
-        this.curriculum = curriculum;
-        this.startDate = startDate;
-        this.courseList = courseList;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getCurriculum() {
-        return curriculum;
-    }
-
-    public List<List<String>> getCourseList() {
-        return courseList;
-    }
-
-    public int getCoursesDuration(){
+    /**
+     * Method parses Map<String, List<String>> with all courses list.
+     * @return sum of courses duration.
+     */
+    public int getCoursesDuration() {
         int courseDuration = 0;
-        for (String duration: getCourseList().get(1)) {
-            courseDuration += Integer.parseInt(duration);
+        for (int i = 1; i <= getCourseList().size(); i++) {
+            List<String> courses = getCourseList().get(String.valueOf(i));
+            for (String course : courses) {
+                courseDuration += Integer.parseInt(course
+                        .replaceAll(Constants.COURSE_NAME_FROM_LIST_REGEXP, Constants.EMPTY_LINE_REGEXP).trim());
+            }
         }
         return courseDuration;
-    }
-
-    @Override
-    public String toString() {
-        return "Student:" +
-                "name='" + name + '\'' +
-                ", curriculum='" + curriculum + '\'' +
-                ", startDate=" + startDate +
-                ", courseList=" + courseList;
     }
 }

@@ -1,21 +1,21 @@
+import java.io.InputStream;
 import java.util.*;
 
-import java.io.File;
-import java.io.IOException;
+public class Reader {
 
-public class Reader implements Constants{
-
+    /**
+     * The method reads the information from file, which puts in 'resources' folder.
+     * @return String with all information from file.
+     */
     public String readFromFile() {
-        File file = new File(PATH_TO_FILE);
+        InputStream inputStream = getClass()
+                .getClassLoader().getResourceAsStream(Constants.FILE_NAME);
         StringBuilder sb = new StringBuilder();
-        try (Scanner scanner = new Scanner(file)) {
+        try (Scanner scanner = new Scanner(inputStream)) {
             while (scanner.hasNextLine()) {
                 sb.append(scanner.nextLine());
                 sb.append("\n");
             }
-        } catch (
-                IOException e) {
-            e.printStackTrace();
         }
         return String.valueOf(sb);
     }
