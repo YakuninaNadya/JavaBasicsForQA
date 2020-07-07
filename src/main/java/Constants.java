@@ -13,6 +13,8 @@ public final class Constants {
     public static final String EMPTY_LINE_REGEXP = "";
     public static final String SPACE_REGEXP = " ";
     public static final String ZERO = "0";
+    public static final String ONE = "1";
+    public static final String DATE_REPORT_FORMAT = "yyyy-MM-dd HH";
     public static final String DATE_FORMAT = "dd' 'MMMM' 'YYYY,' 'EEEE,' 'HH:mm";
 
     public static final int HOURS_PER_DAY = 24;

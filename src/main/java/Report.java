@@ -7,22 +7,29 @@ public class Report {
 
     /**
      * Method generates report with report type parameter.
+     *
      * @param reportDate
      * @param reportType
      * @return String with information about students courses and status.
      */
-    public String generateReport(Calendar reportDate, String reportType) {
+    public String generateReport(Calendar reportDate, ReportType reportType) {
         String report;
-        if (reportType.equals(Constants.ZERO)) {
-            report = generateShortReport(reportDate);
-        } else {
-            report = generateFullReport(reportDate);
+        switch (reportType.toString()) {
+            case "FULL":
+                report = generateFullReport(reportDate);
+                break;
+            case "SHORT":
+                report = generateShortReport(reportDate);
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + reportType);
         }
         return report;
     }
 
     /**
      * Method generates report without report type parameter.
+     *
      * @param reportDate
      * @return String with information about students courses and status.
      */

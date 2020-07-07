@@ -1,6 +1,7 @@
 import lombok.Data;
 
 import java.util.*;
+import java.util.stream.IntStream;
 
 @Data
 public class Handler {
@@ -9,21 +10,20 @@ public class Handler {
 
     /**
      * The method parses data which were read from file.
+     *
      * @param stringFromFile
      * @return List of Students.
      */
     public List<Student> parseDataFileContent(String stringFromFile) {
         List<Student> students = new ArrayList<>();
         List<String> list = Arrays.asList(stringFromFile.split(Constants.STUDENT_DELIMITER));
-        for (int i = 1; i < list.size(); i++) {
-            Student student = Student.builder()
-                    .name(getStudentName(list.get(i)))
-                    .curriculum(getStudentCurriculum(list.get(i)))
-                    .startDate(getCourseStartDate(list.get(i)))
-                    .courseList(getStudentCourseList(list.get(i)))
-                    .build();
-            students.add(student);
-        }
+        IntStream.range(1, list.size())
+                .forEach(i -> students.add(Student.builder()
+                        .name(getStudentName(list.get(i)))
+                        .curriculum(getStudentCurriculum(list.get(i)))
+                        .startDate(getCourseStartDate(list.get(i)))
+                        .courseList(getStudentCourseList(list.get(i)))
+                        .build()));
         return students;
     }
 
@@ -48,24 +48,25 @@ public class Handler {
         String studentCourses = studentData.split(Constants.STUDENTS_COURSES_SEPARATOR)[1];
 
         List<String> course = Arrays.asList(studentCourses.split(Constants.NEW_LINE_REGEXP));
-        for (int i = 1; i < course.size(); i++) {
-            String courseName = course.get(i).replaceAll(Constants.COURSE_NAME_REGEXP, Constants.EMPTY_LINE_REGEXP);
-            courseNames.add(courseName);
-            String courseDuration = course.get(i).substring(course.get(i).length() - 3).trim();
-            courseDurations.add(courseDuration);
-        }
+        IntStream.range(1, course.size())
+                .forEach(i -> {
+                    courseNames.add(course.get(i)
+                            .replaceAll(Constants.COURSE_NAME_REGEXP, Constants.EMPTY_LINE_REGEXP));
+                    courseDurations.add(course.get(i).substring(course.get(i).length() - 3).trim());
+                });
 
         Map<String, List<String>> courses = new HashMap<>();
-        for (int i = 0; i < courseNames.size(); i++) {
+        IntStream.range(0, courseNames.size()).forEach(i -> {
             List<String> courseItem = new ArrayList<>();
             courseItem.add(courseNames.get(i) + " " + courseDurations.get(i));
             courses.put(String.valueOf(i + 1), courseItem);
-        }
+        });
         return courses;
     }
 
     /**
      * The method gets end of courses date. It considers working hours and working days.
+     *
      * @param student
      * @return finish date.
      */
@@ -106,6 +107,7 @@ public class Handler {
 
     /**
      * Method shows information finished course or not on the date, which is in parameter.
+     *
      * @param date
      * @param student
      * @return boolean value.
