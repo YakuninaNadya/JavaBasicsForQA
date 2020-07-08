@@ -5,34 +5,9 @@ import org.junit.jupiter.params.provider.ValueSource;
 import java.util.*;
 
 class HandlerTest {
-    Date date = new Date("06 June 2020, Saturday, 10:00");
     Handler handler = new Handler();
     Map<String, List<String>> map = new HashMap<>();
     List<String> list = new ArrayList<>();
-    //    String course = "Java 11";
-    List<Date> dateList = new ArrayList<>();
-    List<String> course = new ArrayList<>();
-
-
-//    @BeforeEach
-//    void beforeTest() {
-////        List<Date> dateList = new ArrayList<>();
-//        dateList.add(new Date("06 June 2020, Saturday, 10:00"));
-//        dateList.add(new Date("07 June 2020, Sunday, 10:00"));
-//        dateList.add(new Date("08 June 2020, Monday, 10:00"));
-//        dateList.add(new Date("09 June 2020, Tuesday, 10:00"));
-//        dateList.add(new Date("10 June 2020, Wednesday, 10:00"));
-//        dateList.add(new Date("11 June 2020, Thursday, 10:00"));
-//        dateList.add(new Date("12 June 2020, Friday, 10:00"));
-//
-//        course.add("Java 11");
-//        course.add("Java 40");
-//        course.add("Java 8");
-//        course.add("Java 0");
-//
-////        list.addAll("Java 11", "Selenium 11", "Spring 11");
-//
-//    }
 
     @ParameterizedTest
     @ValueSource(strings = {"Tue Jun 09 13:00:00 MSK 2020"})

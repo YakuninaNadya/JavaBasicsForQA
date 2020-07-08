@@ -111,15 +111,11 @@ public class GUI extends JFrame {
 
             final String selectedType = String.valueOf(comboBox.getSelectedItem());
             ReportType reportType = null;
-            switch (selectedType.toUpperCase()) {
-                case "FULL":
-                    reportType = ReportType.valueOf("FULL");
-                    break;
-                case "SHORT":
-                    reportType = ReportType.valueOf("SHORT");
-                    break;
-                default:
-                    break;
+
+            try {
+                reportType = ReportType.valueOf(selectedType.toUpperCase());
+            } catch (IllegalArgumentException ex) {
+                ex.printStackTrace();
             }
             reportText.setText(new Report().generateReport(Utils.generateDateFromString(reportDate), reportType));
         }
