@@ -4,17 +4,22 @@ public class Main {
         /**
          * Please, choose reportDate, and write it in "YYYY-MM-DD HH"format, for example "2020-06-06 10".
          * Also choose type of the report: short or full.
+         *
+         *
+         * If you want to use GUI, uncomment the next line:
          */
+//        runGUI();
 
         String reportDate = "2020-06-06 10";
-        Report report = new Report();
-        System.out.println(report
-                .generateReport(Utils.generateDateFromString(reportDate), ReportType.FULL));
+        runCLI(reportDate, ReportType.FULL);
+    }
 
-        /**
-         * If you want to use GUI, uncomment the next lines:
-         */
-//        GUI gui = new GUI();
-//        gui.setFrame();
+    private static void runCLI(String reportDate, ReportType reportType) {
+        System.out.println(new Report()
+                .generateReport(Utils.generateDateFromString(reportDate), reportType));
+    }
+
+    private static void runGUI() {
+        new GUI().runGUI();
     }
 }

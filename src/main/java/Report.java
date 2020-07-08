@@ -13,18 +13,14 @@ public class Report {
      * @return String with information about students courses and status.
      */
     public String generateReport(Calendar reportDate, ReportType reportType) {
-        String report;
-        switch (reportType.toString()) {
-            case "FULL":
-                report = generateFullReport(reportDate);
-                break;
-            case "SHORT":
-                report = generateShortReport(reportDate);
-                break;
+        switch (reportType) {
+            case FULL:
+                return generateFullReport(reportDate);
+            case SHORT:
+                return generateShortReport(reportDate);
             default:
                 throw new IllegalStateException("Unexpected value: " + reportType);
         }
-        return report;
     }
 
     /**

@@ -17,7 +17,7 @@ public class GUI extends JFrame {
     private JComboBox comboBox;
     private JDatePickerImpl datePicker;
 
-    public void setFrame() {
+    public void runGUI() {
         final JFrame frame = new JFrame("Reports generator");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -113,21 +113,15 @@ public class GUI extends JFrame {
             ReportType reportType = null;
             switch (selectedType.toUpperCase()) {
                 case "FULL":
-                    reportType = ReportType.FULL;
+                    reportType = ReportType.valueOf("FULL");
                     break;
                 case "SHORT":
-                    reportType = ReportType.SHORT;
+                    reportType = ReportType.valueOf("SHORT");
                     break;
                 default:
                     break;
             }
-//            if (selectedType.equals("Full")) {
-//                reportType = Constants.ONE;
-//            } else {
-//                reportType = Constants.ZERO;
-//            }
             reportText.setText(new Report().generateReport(Utils.generateDateFromString(reportDate), reportType));
         }
     }
 }
-

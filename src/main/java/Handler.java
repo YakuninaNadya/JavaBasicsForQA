@@ -77,9 +77,18 @@ public class Handler {
         int days = student.getCoursesDuration() / Constants.QTY_WORKING_HOURS_PER_DAY;
         int hours = student.getCoursesDuration() - (days * Constants.QTY_WORKING_HOURS_PER_DAY);
 
+        if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
+            calendar.roll(Calendar.DATE, 2);
+        } else if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+            calendar.roll(Calendar.DATE, 1);
+        } else if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY && calendar.get(Calendar.HOUR_OF_DAY) >= 10) {
+            calendar.roll(Calendar.DATE, 2);
+        }
+
         if (student.getCoursesDuration() % Constants.QTY_WORKING_HOURS_PER_DAY == 0
                 && student.getCoursesDuration() != Constants.QTY_WORKING_HOURS_PER_DAY
-                && student.getCoursesDuration() <= Constants.QTY_WORKING_HOURS_PER_WEEK) {
+                && student.getCoursesDuration() <= Constants.QTY_WORKING_HOURS_PER_WEEK
+                && student.getCoursesDuration() != 0) {
             calendar.roll(Calendar.DATE, days - 1);
             calendar.roll(Calendar.HOUR_OF_DAY, Constants.QTY_WORKING_HOURS_PER_DAY);
         } else if (student.getCoursesDuration() == Constants.QTY_WORKING_HOURS_PER_DAY) {
@@ -92,15 +101,11 @@ public class Handler {
                 && student.getCoursesDuration() % Constants.QTY_WORKING_HOURS_PER_DAY != 0) {
             calendar.roll(Calendar.DATE, days + 2);
             calendar.roll(Calendar.HOUR_OF_DAY, hours);
+        } else if (student.getCoursesDuration() == 0) {
+            calendar.setTime(startDate);
         } else {
             calendar.roll(Calendar.DATE, days);
             calendar.roll(Calendar.HOUR_OF_DAY, hours);
-        }
-
-        if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
-            calendar.roll(Calendar.DATE, 2);
-        } else if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
-            calendar.roll(Calendar.DATE, 1);
         }
         return calendar.getTime();
     }
